@@ -6,14 +6,15 @@ const app = express();
 app.use(express.json())
 
 const workers = []
-const taskTipes = ["Cortador", "Rasgador", "Prensador", "Tirador", "Aparador", "Empacatador", "Gerente"]
+const taskTipes = ["Cortador", "Rasgador", "Prensador", "Tirador", "Aparador", "Empacotador", "Gerente"]
+const taskValues = [1.8, 9, 10, 1, 0.4, 0.3, 80]
 
 app.get('/', (req, res) => {
     return res.send('Web Paiol')
 })
 
 app.post('/worker', (req, res) => {
-    const { name, phone, task } = req.body
+    const { name, phone, office } = req.body
 
     const workerExists = workers.find( worker => worker.name === name)
 
@@ -25,7 +26,7 @@ app.post('/worker', (req, res) => {
         id: uuidv4(),
         name,
         phone,
-        task: taskTipes[task],
+        office: taskTipes[office],
         produce: []
     }
 
@@ -52,7 +53,7 @@ app.put('/worker/:id', (req, res) => {
 })
 
 app.post('/worker/produce/:id', (req, res) => {
-    const { amount } = req.body
+    const { amount, task } = req.body
     const { id } = req.params
 
     const worker = workers.find(worker => worker.id === id)
@@ -62,8 +63,8 @@ app.post('/worker/produce/:id', (req, res) => {
     }
 
     const soma = (amount, value) => {
-        if(taskTipes[0]) {
-            value = 1.8
+        if(taskTipes[task]) {
+            value = taskValues[task]
         }
 
         return amount * value;
@@ -72,6 +73,7 @@ app.post('/worker/produce/:id', (req, res) => {
 
     worker.produce.push({
         amount, 
+        task: taskTipes[task],
         salary: soma(amount),
         day: new Date()
     })
