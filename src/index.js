@@ -74,8 +74,12 @@ app.post('/worker/produce/:id', (req, res) => {
 
     const sumSalary = (total) => {
 
-        for (var i = 0; i < worker.produce.length; i++) {
-            total += sumIncome(amount)
+        for (var i = -1; i < worker.produce.length; i++) {
+            if(i == -1) {
+                total = sumIncome(amount)
+            } else {
+                total += sumIncome(amount)
+            }
         }
 
         return total
