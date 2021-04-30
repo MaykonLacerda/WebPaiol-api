@@ -6,6 +6,7 @@ const app = express();
 app.use(express.json())
 
 const workers = []
+const taskTipes = ["Cortador", "Rasgador", "Prensador", "Tirador", "Aparador", "Empacatador", "Gerente"]
 
 app.get('/', (req, res) => {
     return res.send('Web Paiol')
@@ -24,7 +25,7 @@ app.post('/worker', (req, res) => {
         id: uuidv4(),
         name,
         phone,
-        task,
+        task: taskTipes[task],
         produce: []
     }
 
@@ -51,7 +52,32 @@ app.put('/worker/:id', (req, res) => {
 })
 
 app.post('/worker/produce/:id', (req, res) => {
-    const { }
+    const { amount } = req.body
+    const { id } = req.params
+
+    const worker = workers.find(worker => worker.id === id)
+
+    if(!worker) {
+        return res.status(404).json( { message: "Worker not found" } )
+    }
+
+    const soma = (amount, value) => {
+        if(taskTipes[0]) {
+            value = 1.8
+        }
+
+        return amount * value;
+    }
+
+
+    worker.produce.push({
+        amount, 
+        salary: soma(amount),
+        day: new Date()
+    })
+
+    return res.status(200).json(worker)
+
 })
 
 app.listen(3333, () => console.log("Server is running!"))
