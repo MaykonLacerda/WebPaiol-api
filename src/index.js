@@ -8,6 +8,7 @@ app.use(express.json())
 const workers = []
 const taskTipes = ["Cortador", "Rasgador", "Prensador", "Tirador", "Aparador", "Empacotador", "Gerente"]
 const taskValues = [1.8, 9, 10, 1, 0.4, 0.3, 80]
+const salary = []
 
 app.get('/', (req, res) => {
     return res.send('Web Paiol')
@@ -23,11 +24,12 @@ app.post('/worker', (req, res) => {
     }
 
     const worker = {
-        id: uuidv4(),
+        id: "1",
         name,
         phone,
         office: taskTipes[office],
-        produce: []
+        produce: [],
+        salary: []
     }
 
     workers.push(worker)
@@ -62,7 +64,7 @@ app.post('/worker/produce/:id', (req, res) => {
         return res.status(404).json( { message: "Worker not found" } )
     }
 
-    const soma = (amount, value) => {
+    const sumIncome = (amount, value) => {
         if(taskTipes[task]) {
             value = taskValues[task]
         }
@@ -70,15 +72,40 @@ app.post('/worker/produce/:id', (req, res) => {
         return amount * value;
     }
 
+    const sumSalary = (total) => {
 
+        for (var i = 0; i < worker.produce.length; i++) {
+            total += sumIncome(amount)
+        }
+
+        return total
+    }
+    
     worker.produce.push({
         amount, 
         task: taskTipes[task],
-        salary: soma(amount),
-        day: new Date()
+        income_at_day: sumIncome(amount),
+        day: new Date(),
+        salary: sumSalary(parseFloat(amount))
     })
 
-    return res.status(200).json(worker)
+
+    return res.status(200).json(workers)
+
+})
+
+app.get('/worker/salary/:id', (req, res) => {
+    const { id } = req.params
+
+    const worker = workers.find(worker => worker.id === id)
+
+    const sizeProduce = worker.produce.length -1
+
+    if(sizeProduce < 0) {
+        return res.status(404).json({message: "Error"})
+    }
+
+    return res.json( { result: worker.produce[sizeProduce].salary } )
 
 })
 
