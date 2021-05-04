@@ -5,7 +5,6 @@ import {
 } from "typeorm";
 
 import { v4 as uuidv4 } from "uuid"
-
 @Entity("workers")
 class Worker {
 
@@ -31,4 +30,4 @@ class Worker {
     }
 }
 
-export { Worker } 
+export { Worker }

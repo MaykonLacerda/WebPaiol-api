@@ -21,6 +21,9 @@ class Production {
   worker: Worker;
 
   @Column()
+  worker_id: string;
+
+  @Column()
   amount: string;
 
   @Column()

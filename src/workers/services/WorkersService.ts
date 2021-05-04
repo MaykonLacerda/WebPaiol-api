@@ -22,8 +22,8 @@ class WorkersService {
         }
 
         const worker = this.workersRepository.create({
-            name, 
-            phone, 
+            name,
+            phone,
             office: officeType(office)
         })
 
