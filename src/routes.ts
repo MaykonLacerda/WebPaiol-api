@@ -10,5 +10,6 @@ const productionsController = new ProductionsController()
 routes.post('/worker', workersController.create)
 
 routes.post('/worker/production', productionsController.create)
+routes.get('/worker/production/:id', productionsController.showByWorker)
 
 export { routes }

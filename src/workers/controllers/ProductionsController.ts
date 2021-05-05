@@ -15,6 +15,16 @@ class ProductionsController {
     return res.json(production)
 
   }
+
+  async showByWorker( req: Request, res: Response) {
+    const { id } = req.params
+
+    const productionsService = new ProductionsService()
+
+    const list = await productionsService.listByWorker(id)
+
+    return res.json(list)
+  }
 }
 
 export { ProductionsController }

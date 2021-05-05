@@ -1,8 +1,6 @@
 import { getCustomRepository, Repository } from "typeorm"
 import { Production } from "../entities/Production"
 import { ProductionsRepository } from "../repositories/ProductionsRepository"
-
-
 interface IProductionCreate {
   amount: string
   task: string
@@ -33,6 +31,16 @@ class ProductionsService {
 
     return production
   }
+
+  async listByWorker(worker_id: string) {
+    const list = await this.productionsRepository.find({
+      where: { worker_id },
+      relations: ["worker"]
+    })
+
+    return list
+  }
+
 }
 
 export { ProductionsService }
