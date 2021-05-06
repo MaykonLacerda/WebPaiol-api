@@ -5,6 +5,7 @@ interface IProductionCreate {
   amount: string
   task: string
   worker_id: string
+  value: string
 }
 
 class ProductionsService {
@@ -15,7 +16,7 @@ class ProductionsService {
     this.productionsRepository = getCustomRepository(ProductionsRepository)
   }
 
-  async create({ amount, task, worker_id }: IProductionCreate) {
+  async create({ amount, task, worker_id, value }: IProductionCreate) {
 
     const taskType = (taskType: string) => {
       return taskType = this.taskTipes[task]
@@ -23,6 +24,7 @@ class ProductionsService {
 
     const production = this.productionsRepository.create({
       amount,
+      value,
       task: taskType(task),
       worker_id
     })

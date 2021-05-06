@@ -22,6 +22,10 @@ export class CreateProduction1620081810049 implements MigrationInterface {
                         type: "integer",
                     },
                     {
+                      name: "value",
+                      type: "double",
+                  },
+                    {
                         name: "task",
                         type: "varchar"
                     },

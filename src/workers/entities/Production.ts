@@ -27,6 +27,9 @@ class Production {
   amount: string;
 
   @Column()
+  value: string;
+
+  @Column()
   task: string;
 
   @CreateDateColumn()
