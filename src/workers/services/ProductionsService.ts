@@ -1,16 +1,17 @@
 import { getCustomRepository, Repository } from "typeorm"
 import { Production } from "../entities/Production"
 import { ProductionsRepository } from "../repositories/ProductionsRepository"
+import { Task } from "../task/Task"
+
 interface IProductionCreate {
   amount: string
-  task: string
+  task: number
   worker_id: string
   value: string
 }
 
 class ProductionsService {
   private productionsRepository: Repository<Production>
-  private taskTipes = ["Cortador", "Rasgador", "Prensador", "Tirador", "Aparador", "Empacotador", "Gerente"]
 
   constructor () {
     this.productionsRepository = getCustomRepository(ProductionsRepository)
@@ -18,14 +19,12 @@ class ProductionsService {
 
   async create({ amount, task, worker_id, value }: IProductionCreate) {
 
-    const taskType = (taskType: string) => {
-      return taskType = this.taskTipes[task]
-    }
+    const taskType = new Task()
 
     const production = this.productionsRepository.create({
       amount,
       value,
-      task: taskType(task),
+      task: taskType.type(task),
       worker_id
     })
 

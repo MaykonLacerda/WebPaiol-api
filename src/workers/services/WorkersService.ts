@@ -1,35 +1,34 @@
 import { getCustomRepository, Repository } from "typeorm"
 import { Worker } from "../entities/Worker"
 import { WorkersRepository } from "../repositories/WorkersRepository"
+import { Task } from "../task/Task"
 
 interface IWorkerCreate {
     name: string
     phone: string
-    office: string
+    office: number
 }
 
 class WorkersService {
     private workersRepository: Repository<Worker>
-    private taskTipes = ["Cortador", "Rasgador", "Prensador", "Tirador", "Aparador", "Empacotador", "Gerente"]
 
     constructor() {
         this.workersRepository = getCustomRepository(WorkersRepository)
     }
 
     async create({name, phone, office}: IWorkerCreate) {
-        const officeType = (officeType: string) => {
-            return officeType = this.taskTipes[office]
-        }
 
-        const worker = this.workersRepository.create({
-            name,
-            phone,
-            office: officeType(office)
-        })
+      const taskType = new Task()
 
-        await this.workersRepository.save(worker)
+      const worker = this.workersRepository.create({
+          name,
+          phone,
+          office: taskType.type(office)
+      })
 
-        return worker
+      await this.workersRepository.save(worker)
+
+      return worker
     }
 }
 
