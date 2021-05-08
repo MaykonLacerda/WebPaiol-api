@@ -1,5 +1,3 @@
-
-
 class Task {
 
   private readonly taskTypes = ["Cortador", "Rasgador", "Prensador", "Tirador", "Aparador", "Empacotador", "Gerente"]

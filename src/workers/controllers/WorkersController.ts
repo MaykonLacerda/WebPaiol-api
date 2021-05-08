@@ -13,6 +13,15 @@ class WorkersController {
 
     return res.json(worker);
   }
+
+  async showWorkers(req: Request, res: Response) {
+
+    const workersService = new WorkersService();
+
+    const list = await workersService.listWorkers()
+
+    return res.json(list)
+  }
 }
 
 export { WorkersController };

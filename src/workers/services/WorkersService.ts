@@ -30,6 +30,12 @@ class WorkersService {
 
       return worker
     }
+
+    async listWorkers() {
+      const list = await this.workersRepository.find()
+
+      return list
+    }
 }
 
 export { WorkersService }
