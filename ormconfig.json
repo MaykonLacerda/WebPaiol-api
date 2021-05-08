@@ -1,5 +1,9 @@
 {
     "type": "sqlite",
+    "host": "localhost",
+    "port": "3333",
+    "username": "test",
+    "password": "test",
     "database": "./src/database/database.sqlite",
     "migrations": ["./src/database/migrations/**.ts"],
     "entities": ["./src/workers/entities/**.ts", "./src/accounts/entities/**.ts"],
