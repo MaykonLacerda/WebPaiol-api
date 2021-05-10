@@ -15,7 +15,8 @@ export class CreateUsers1620504186082 implements MigrationInterface {
             },
             {
               name: "name",
-              type: "string"
+              type: "string",
+              isUnique: true
             },
             {
               name: "phone",
